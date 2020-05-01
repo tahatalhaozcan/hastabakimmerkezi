@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="angularjs.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <title></title>
+</head>
+<body ng-app="myApp" ng-controller="gcCtrl">
+    <div class="container-fluid bg-grey">
+        <div class="btn-group btn-group-justified">
+            
+            <a href="hastaislem.html" class="btn btn-primary">HASTA DURUM </a>
+        </div>
+
+    </div>
+    <div>
+       <form class="form-signin">
+            <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Yeni Hasta Giriş</h1>
+            <label for="inputEmail" class="sr-only">Personel Ad Soyad:</label>
+            <input type="text" ng-model="hasta.hastaAd" class="form-control" placeholder="Hasta Adı" required="" autofocus="">
+            <label for="inputPassword" class="sr-only">Kullanıcı Adı Giriniz:</label>
+            <input type="text" ng-model="hasta.hastaSoyad" class="form-control" placeholder="Hasta Soyadı" required="">
+            <label for="inputPassword" class="sr-only">Şifre Belirleyiniz</label>
+            <input type="text" ng-model="hasta.hastaGelisNedeni" class="form-control" placeholder="Geliş Nedeni" required="">
+            <div class="checkbox mb-3">
+            </div>
+            <button class="btn btn-primary" ng-click="hastaekle(hasta)">Giriş Oluştur</button>
+
+            <div class="container">
+                <div class="jumbotron">
+                    <h1></h1>
+                </div>
+            </div></form></div>
+
+            <div>
+                <h3>Hastalar</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Hasta Dosya Numarası</th>
+                            <th>Hasta Adı</th>
+                            <th>Hasta Soyad</th>
+                            <th>Hasta Geliş Nedeni</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in hastalarigetir">
+                            <td>{{x.hastaID}}</td>
+                            <td>{{x.hastaAd}}</td>
+                            <td>{{x.hastaSoyad}}</td>
+                            <td>{{x.hastaGelisNedeni}}</td>
+                            <td><button class="btn btn-success" ng-click="taburcu(x.hastaID)">Taburcu Et</button></td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="klinikModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="admin">
+    <Key>
+      <PropertyRef Name="adminID" />
+    </Key>
+    <Property Name="adminID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="adminKA" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="adminSifre" Type="nchar" MaxLength="16" Nullable="false" />
+  </EntityType>
+  <EntityType Name="bakim">
+    <Key>
+      <PropertyRef Name="bakimID" />
+    </Key>
+    <Property Name="bakimID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="hastaID" Type="int" Nullable="false" />
+    <Property Name="doktorID" Type="int" Nullable="false" />
+    <Property Name="ilacID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="doktor">
+    <Key>
+      <PropertyRef Name="doktorID" />
+    </Key>
+    <Property Name="doktorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="doktorAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="doktorSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="hasta">
+    <Key>
+      <PropertyRef Name="hastaID" />
+    </Key>
+    <Property Name="hastaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="hastaAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="hastaSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="hastaGelisNedeni" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ilac">
+    <Key>
+      <PropertyRef Name="ilacID" />
+    </Key>
+    <Property Name="ilacID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ilacAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ilacDoz" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="personel">
+    <Key>
+      <PropertyRef Name="personelID" />
+    </Key>
+    <Property Name="personelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="personelKA" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="personelSifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_bakim_doktor">
+    <End Role="doktor" Type="Self.doktor" Multiplicity="1" />
+    <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="doktor">
+        <PropertyRef Name="doktorID" />
+      </Principal>
+      <Dependent Role="bakim">
+        <PropertyRef Name="doktorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_bakim_hasta">
+    <End Role="hasta" Type="Self.hasta" Multiplicity="1" />
+    <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hasta">
+        <PropertyRef Name="hastaID" />
+      </Principal>
+      <Dependent Role="bakim">
+        <PropertyRef Name="hastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_bakim_ilac">
+    <End Role="ilac" Type="Self.ilac" Multiplicity="1" />
+    <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ilac">
+        <PropertyRef Name="ilacID" />
+      </Principal>
+      <Dependent Role="bakim">
+        <PropertyRef Name="ilacID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="klinikModelStoreContainer">
+    <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="bakim" EntityType="Self.bakim" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="doktor" EntityType="Self.doktor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="hasta" EntityType="Self.hasta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ilac" EntityType="Self.ilac" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="personel" EntityType="Self.personel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_bakim_doktor" Association="Self.FK_bakim_doktor">
+      <End Role="doktor" EntitySet="doktor" />
+      <End Role="bakim" EntitySet="bakim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_bakim_hasta" Association="Self.FK_bakim_hasta">
+      <End Role="hasta" EntitySet="hasta" />
+      <End Role="bakim" EntitySet="bakim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_bakim_ilac" Association="Self.FK_bakim_ilac">
+      <End Role="ilac" EntitySet="ilac" />
+      <End Role="bakim" EntitySet="bakim" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

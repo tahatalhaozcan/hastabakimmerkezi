@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="klinikModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="adminID" />
+          </Key>
+          <Property Name="adminID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adminKA" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="adminSifre" Type="nchar" MaxLength="16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="bakim">
+          <Key>
+            <PropertyRef Name="bakimID" />
+          </Key>
+          <Property Name="bakimID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hastaID" Type="int" Nullable="false" />
+          <Property Name="doktorID" Type="int" Nullable="false" />
+          <Property Name="ilacID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="doktor">
+          <Key>
+            <PropertyRef Name="doktorID" />
+          </Key>
+          <Property Name="doktorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="doktorAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="doktorSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="hasta">
+          <Key>
+            <PropertyRef Name="hastaID" />
+          </Key>
+          <Property Name="hastaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hastaAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="hastaSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="hastaGelisNedeni" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ilac">
+          <Key>
+            <PropertyRef Name="ilacID" />
+          </Key>
+          <Property Name="ilacID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ilacAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ilacDoz" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="personel">
+          <Key>
+            <PropertyRef Name="personelID" />
+          </Key>
+          <Property Name="personelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="personelKA" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="personelSifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_bakim_doktor">
+          <End Role="doktor" Type="Self.doktor" Multiplicity="1" />
+          <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doktor">
+              <PropertyRef Name="doktorID" />
+            </Principal>
+            <Dependent Role="bakim">
+              <PropertyRef Name="doktorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bakim_hasta">
+          <End Role="hasta" Type="Self.hasta" Multiplicity="1" />
+          <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hasta">
+              <PropertyRef Name="hastaID" />
+            </Principal>
+            <Dependent Role="bakim">
+              <PropertyRef Name="hastaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bakim_ilac">
+          <End Role="ilac" Type="Self.ilac" Multiplicity="1" />
+          <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ilac">
+              <PropertyRef Name="ilacID" />
+            </Principal>
+            <Dependent Role="bakim">
+              <PropertyRef Name="ilacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="klinikModelStoreContainer">
+          <EntitySet Name="admin" EntityType="Self.admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="bakim" EntityType="Self.bakim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="doktor" EntityType="Self.doktor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="hasta" EntityType="Self.hasta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ilac" EntityType="Self.ilac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="personel" EntityType="Self.personel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_bakim_doktor" Association="Self.FK_bakim_doktor">
+            <End Role="doktor" EntitySet="doktor" />
+            <End Role="bakim" EntitySet="bakim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bakim_hasta" Association="Self.FK_bakim_hasta">
+            <End Role="hasta" EntitySet="hasta" />
+            <End Role="bakim" EntitySet="bakim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bakim_ilac" Association="Self.FK_bakim_ilac">
+            <End Role="ilac" EntitySet="ilac" />
+            <End Role="bakim" EntitySet="bakim" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="klinikModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bakim">
+          <Key>
+            <PropertyRef Name="bakimID" />
+          </Key>
+          <Property Name="bakimID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="doktorID" Type="Int32" Nullable="false" />
+          <Property Name="hastaID" Type="Int32" Nullable="false" />
+          <Property Name="ilacID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="doktor" Relationship="Self.FK_bakim_doktor" FromRole="bakim" ToRole="doktor" />
+          <NavigationProperty Name="hasta" Relationship="Self.FK_bakim_hasta" FromRole="bakim" ToRole="hasta" />
+          <NavigationProperty Name="ilac" Relationship="Self.FK_bakim_ilac" FromRole="bakim" ToRole="ilac" />
+        </EntityType>
+        <EntityType Name="doktor">
+          <Key>
+            <PropertyRef Name="doktorID" />
+          </Key>
+          <Property Name="doktorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="doktorAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="doktorSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="bakim" Relationship="Self.FK_bakim_doktor" FromRole="doktor" ToRole="bakim" />
+        </EntityType>
+        <EntityType Name="hasta">
+          <Key>
+            <PropertyRef Name="hastaID" />
+          </Key>
+          <Property Name="hastaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hastaAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="hastaSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="bakim" Relationship="Self.FK_bakim_hasta" FromRole="hasta" ToRole="bakim" />
+          <Property Name="hastaGelisNedeni" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ilac">
+          <Key>
+            <PropertyRef Name="ilacID" />
+          </Key>
+          <Property Name="ilacID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ilacAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ilacDoz" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="bakim" Relationship="Self.FK_bakim_ilac" FromRole="ilac" ToRole="bakim" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_bakim_doktor">
+          <End Role="doktor" Type="Self.doktor" Multiplicity="1" />
+          <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="doktor">
+              <PropertyRef Name="doktorID" />
+            </Principal>
+            <Dependent Role="bakim">
+              <PropertyRef Name="doktorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bakim_hasta">
+          <End Role="hasta" Type="Self.hasta" Multiplicity="1" />
+          <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hasta">
+              <PropertyRef Name="hastaID" />
+            </Principal>
+            <Dependent Role="bakim">
+              <PropertyRef Name="hastaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_bakim_ilac">
+          <End Role="ilac" Type="Self.ilac" Multiplicity="1" />
+          <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ilac">
+              <PropertyRef Name="ilacID" />
+            </Principal>
+            <Dependent Role="bakim">
+              <PropertyRef Name="ilacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="klinikEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bakim" EntityType="Self.bakim" />
+          <EntitySet Name="doktor" EntityType="Self.doktor" />
+          <EntitySet Name="hasta" EntityType="Self.hasta" />
+          <EntitySet Name="ilac" EntityType="Self.ilac" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_bakim_doktor" Association="Self.FK_bakim_doktor">
+            <End Role="doktor" EntitySet="doktor" />
+            <End Role="bakim" EntitySet="bakim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bakim_hasta" Association="Self.FK_bakim_hasta">
+            <End Role="hasta" EntitySet="hasta" />
+            <End Role="bakim" EntitySet="bakim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_bakim_ilac" Association="Self.FK_bakim_ilac">
+            <End Role="ilac" EntitySet="ilac" />
+            <End Role="bakim" EntitySet="bakim" />
+          </AssociationSet>
+          <EntitySet Name="admin" EntityType="klinikModel.admin" />
+          <EntitySet Name="personel" EntityType="klinikModel.personel" />
+        </EntityContainer>
+        <EntityType Name="admin">
+          <Key>
+            <PropertyRef Name="adminID" />
+          </Key>
+          <Property Name="adminID" Type="Int32" Nullable="false" />
+          <Property Name="adminSifre" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="true" />
+          <Property Name="adminKA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="personel">
+          <Key>
+            <PropertyRef Name="personelID" />
+          </Key>
+          <Property Name="personelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="personelSifre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="personelKA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="klinikModelStoreContainer" CdmEntityContainer="klinikEntities">
+          <EntitySetMapping Name="bakim">
+            <EntityTypeMapping TypeName="klinikModel.bakim">
+              <MappingFragment StoreEntitySet="bakim">
+                <ScalarProperty Name="bakimID" ColumnName="bakimID" />
+                <ScalarProperty Name="doktorID" ColumnName="doktorID" />
+                <ScalarProperty Name="hastaID" ColumnName="hastaID" />
+                <ScalarProperty Name="ilacID" ColumnName="ilacID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="doktor">
+            <EntityTypeMapping TypeName="klinikModel.doktor">
+              <MappingFragment StoreEntitySet="doktor">
+                <ScalarProperty Name="doktorID" ColumnName="doktorID" />
+                <ScalarProperty Name="doktorAd" ColumnName="doktorAd" />
+                <ScalarProperty Name="doktorSoyad" ColumnName="doktorSoyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="hasta">
+            <EntityTypeMapping TypeName="klinikModel.hasta">
+              <MappingFragment StoreEntitySet="hasta">
+                <ScalarProperty Name="hastaGelisNedeni" ColumnName="hastaGelisNedeni" />
+                <ScalarProperty Name="hastaID" ColumnName="hastaID" />
+                <ScalarProperty Name="hastaAd" ColumnName="hastaAd" />
+                <ScalarProperty Name="hastaSoyad" ColumnName="hastaSoyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ilac">
+            <EntityTypeMapping TypeName="klinikModel.ilac">
+              <MappingFragment StoreEntitySet="ilac">
+                <ScalarProperty Name="ilacID" ColumnName="ilacID" />
+                <ScalarProperty Name="ilacAd" ColumnName="ilacAd" />
+                <ScalarProperty Name="ilacDoz" ColumnName="ilacDoz" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="klinikModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="admin">
+            <EntityTypeMapping TypeName="klinikModel.admin">
+              <MappingFragment StoreEntitySet="admin">
+                <ScalarProperty Name="adminKA" ColumnName="adminKA" />
+                <ScalarProperty Name="adminSifre" ColumnName="adminSifre" />
+                <ScalarProperty Name="adminID" ColumnName="adminID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="personel">
+            <EntityTypeMapping TypeName="klinikModel.personel">
+              <MappingFragment StoreEntitySet="personel">
+                <ScalarProperty Name="personelKA" ColumnName="personelKA" />
+                <ScalarProperty Name="personelSifre" ColumnName="personelSifre" />
+                <ScalarProperty Name="personelID" ColumnName="personelID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

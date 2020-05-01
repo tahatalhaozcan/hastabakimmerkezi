@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="angularjs.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <title></title>
+</head>
+<body ng-app="myApp" ng-controller="yonetimCtrl">
+    <div class="container-fluid bg-grey">
+        <div class="btn-group btn-group-justified">
+            <a href="hastagiriscikis.html" class="btn btn-primary">TABURCU-KAYIT</a>
+            <a href="hastaislem.html" class="btn btn-primary">HASTA DURUM </a>
+        </div>
+
+    </div>
+    <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Doktor Sicil No</th>
+                    <th>Doktor Ad</th>
+                    <th>Doktor Soyad</th>
+
+                    <th style="width: 36px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in doktorlarigetir">
+                    <td>{{x.doktorID}}</td>
+                    <td>{{x.doktorAd}}</td>
+                    <td>{{x.doktorSoyad}}</td>
+
+                    <td>
+
+                        <a ng-click="isinesonver(x.doktorID)" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+    <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Hasta Dosya No</th>
+                    <th>Hasta Ad</th>
+                    <th>Hasta Soyad</th>
+
+                    <th style="width: 36px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in hastalarigetir">
+                    <td>{{x.hastaID}}</td>
+                    <td>{{x.hastaAd}}</td>
+                    <td>{{x.hastaSoyad}}</td>
+
+
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+    <div class="well">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>İlac Referans No</th>
+                    <th>İlac Ad</th>
+                    <th>İlac Doz</th>
+
+                    <th style="width: 36px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="x in ilaclarigetir">
+                    <td>{{x.ilacID}}</td>
+                    <td>{{x.ilacAd}}</td>
+                    <td>{{x.ilacDoz}} Mg</td>
+                    <td>
+
+                        <a ng-click="ilacsil(x.ilacID)" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                    </td>
+
+
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <form class="form-signin">
+        <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Yeni İlaç Giriş</h1>
+       
+        <label for="inputPassword" class="sr-only">İlaç Ad:</label>
+        <input type="text" ng-model="ilac.ilacAd" class="form-control" placeholder="İlaç Adı" required="">
+        <label for="inputPassword" class="sr-only">İlaç Doz:</label>
+        <input type="text" ng-model="ilac.ilacDoz" class="form-control" placeholder="Doz" required="">
+        <div class="checkbox mb-3">
+        </div>
+        <button class="btn btn-primary" ng-click="ilacekle(ilac)">Giriş Oluştur</button>
+
+        <div class="container">
+            <div class="jumbotron">
+                <h1></h1>
+            </div>
+        </div>
+    </form></div>
+
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="angularjs.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <title></title>
+</head>
+<body ng-app="myApp" ng-controller="islemCtrl">
+    <div class="container-fluid bg-grey">
+        <div class="btn-group btn-group-justified">
+            <a href="hastagiriscikis.html" class="btn btn-primary">TABURCU-KAYIT</a>
+            
+        </div>
+
+    </div>
+<div class="container">
+    <div class="jumbotron">
+        <h1></h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>Hastalar</h3>
+            <ul class="list-group">
+                <li ng-repeat="x in hastalarigetir" class="list-group-item">{{x.hastaID}}-{{x.hastaAd}} {{x.hastaSoyad}} <button class="btn btn-info" style="float:right" ng-click="bilgilerigetir(x.hastaID)">Hasta Detay</button> </li>
+
+            </ul>
+
+
+
+        </div>
+        <div class="col-sm-4">
+            <h3>Hasta Bilgileri</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Geliş Nedeni</th>
+                        <th>Doktor</th>
+                        <th>İlaç</th>
+                        <th>Tedavi Tamamlama</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in hastabilgileri">
+                        <td>{{x.hastaGelisNedeni}}</td>
+                        <td>{{x.doktorAd}} {{x.doktorSoyad}}</td>
+                        <td>{{x.ilacAd}} {{x.ilacDoz}}</td>
+                        <td><button class="btn btn-success" ng-click="tedavibitir(x.bakimID)">Tedavi Tamamla</button></td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+        <div class="col-sm-4">
+            <h3>Tedavi Oluştur</h3>
+            <label>Hasta:</label>
+            <select ng-model="hastaid" class="form-control" id="exampleFormControlSelect1">
+                <option ng-repeat="x in hastalarigetir" value="{{x.hastaID}}">{{x.hastaAd}} {{x.hastaSoyad}}</option>
+            </select>
+            <label>Doktor:</label>
+            <select ng-model="doktorid" class="form-control" id="exampleFormControlSelect1">
+                <option ng-repeat="x in doktorlarigetir" value="{{x.doktorID}}">{{x.doktorAd}} {{x.doktorSoyad}}</option>
+            </select>
+            <label>İlaç Seçiniz</label>
+            <select class="form-control" ng-model="ilacid">
+                <option ng-repeat="x in ilaclarigetir" value="{{x.ilacID}}">{{x.ilacAd + "-"  + x.ilacDoz}} mg</option>
+            </select>
+            
+            <btn class="btn btn-primary" ng-click="tedaviolustur(hastaid,doktorid,ilacid,adet)">Tedavi Başlat</btn>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

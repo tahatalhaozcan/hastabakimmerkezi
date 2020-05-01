@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="klinikModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="bakim">
+    <Key>
+      <PropertyRef Name="bakimID" />
+    </Key>
+    <Property Name="bakimID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="doktorID" Type="Int32" Nullable="false" />
+    <Property Name="hastaID" Type="Int32" Nullable="false" />
+    <Property Name="ilacID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="doktor" Relationship="Self.FK_bakim_doktor" FromRole="bakim" ToRole="doktor" />
+    <NavigationProperty Name="hasta" Relationship="Self.FK_bakim_hasta" FromRole="bakim" ToRole="hasta" />
+    <NavigationProperty Name="ilac" Relationship="Self.FK_bakim_ilac" FromRole="bakim" ToRole="ilac" />
+  </EntityType>
+  <EntityType Name="doktor">
+    <Key>
+      <PropertyRef Name="doktorID" />
+    </Key>
+    <Property Name="doktorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="doktorAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="doktorSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="bakim" Relationship="Self.FK_bakim_doktor" FromRole="doktor" ToRole="bakim" />
+  </EntityType>
+  <EntityType Name="hasta">
+    <Key>
+      <PropertyRef Name="hastaID" />
+    </Key>
+    <Property Name="hastaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hastaAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="hastaSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="bakim" Relationship="Self.FK_bakim_hasta" FromRole="hasta" ToRole="bakim" />
+    <Property Name="hastaGelisNedeni" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="ilac">
+    <Key>
+      <PropertyRef Name="ilacID" />
+    </Key>
+    <Property Name="ilacID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ilacAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ilacDoz" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="bakim" Relationship="Self.FK_bakim_ilac" FromRole="ilac" ToRole="bakim" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_bakim_doktor">
+    <End Role="doktor" Type="Self.doktor" Multiplicity="1" />
+    <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="doktor">
+        <PropertyRef Name="doktorID" />
+      </Principal>
+      <Dependent Role="bakim">
+        <PropertyRef Name="doktorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_bakim_hasta">
+    <End Role="hasta" Type="Self.hasta" Multiplicity="1" />
+    <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="hasta">
+        <PropertyRef Name="hastaID" />
+      </Principal>
+      <Dependent Role="bakim">
+        <PropertyRef Name="hastaID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_bakim_ilac">
+    <End Role="ilac" Type="Self.ilac" Multiplicity="1" />
+    <End Role="bakim" Type="Self.bakim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ilac">
+        <PropertyRef Name="ilacID" />
+      </Principal>
+      <Dependent Role="bakim">
+        <PropertyRef Name="ilacID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="klinikEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="bakim" EntityType="Self.bakim" />
+    <EntitySet Name="doktor" EntityType="Self.doktor" />
+    <EntitySet Name="hasta" EntityType="Self.hasta" />
+    <EntitySet Name="ilac" EntityType="Self.ilac" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_bakim_doktor" Association="Self.FK_bakim_doktor">
+      <End Role="doktor" EntitySet="doktor" />
+      <End Role="bakim" EntitySet="bakim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_bakim_hasta" Association="Self.FK_bakim_hasta">
+      <End Role="hasta" EntitySet="hasta" />
+      <End Role="bakim" EntitySet="bakim" />
+    </AssociationSet>
+    <AssociationSet Name="FK_bakim_ilac" Association="Self.FK_bakim_ilac">
+      <End Role="ilac" EntitySet="ilac" />
+      <End Role="bakim" EntitySet="bakim" />
+    </AssociationSet>
+    <EntitySet Name="admin" EntityType="klinikModel.admin" />
+    <EntitySet Name="personel" EntityType="klinikModel.personel" />
+  </EntityContainer>
+  <EntityType Name="admin">
+    <Key>
+      <PropertyRef Name="adminID" />
+    </Key>
+    <Property Name="adminID" Type="Int32" Nullable="false" />
+    <Property Name="adminSifre" Type="String" Nullable="false" MaxLength="16" FixedLength="true" Unicode="true" />
+    <Property Name="adminKA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="personel">
+    <Key>
+      <PropertyRef Name="personelID" />
+    </Key>
+    <Property Name="personelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="personelSifre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="personelKA" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
